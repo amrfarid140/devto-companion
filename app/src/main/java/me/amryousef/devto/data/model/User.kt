@@ -11,11 +11,11 @@ data class User(
     @Json(name = "username")
     val username: String,
     @Json(name = "twitter_username")
-    val twitter: String,
+    val twitter: String?,
     @Json(name = "github_username")
-    val github: String,
+    val github: String?,
     @Json(name = "website_url")
-    val website: URI,
+    val website: URI?,
     @Json(name = "profile_image")
     val profileImage: URI,
     @Json(name = "profile_image_90")

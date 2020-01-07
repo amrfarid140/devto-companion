@@ -14,7 +14,7 @@ data class Article(
     @Json(name = "description")
     val description: String,
     @Json(name = "cover_image")
-    val coverImage: URI,
+    val coverImage: URI?,
     @Json(name = "readable_publish_date")
     val publishDate: String,
     @Json(name = "tag_list")
@@ -26,5 +26,5 @@ data class Article(
     @Json(name = "user")
     val user: User,
     @Json(name = "organization")
-    val organisation: Organisation
+    val organisation: Organisation?
 )

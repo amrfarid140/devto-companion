@@ -13,7 +13,7 @@ sealed class State {
     object Error : State()
     data class Ready(val articles: List<ArticleState>) : State() {
         data class ArticleState(
-            val imageUrl: URI,
+            val imageUrl: URI?,
             val title: String,
             val authorImage: URI,
             val authorName: String,

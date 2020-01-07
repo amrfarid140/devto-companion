@@ -5,6 +5,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+def apiKey() {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    return properties.getProperty("api.key")
+}
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -15,6 +21,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "API_KEY", apiKey()
+
     }
     buildTypes {
         release {
@@ -59,6 +68,8 @@ dependencies {
 
     api "com.babylon.orbit:orbit:3.0.0"
     api "com.babylon.orbit:orbit-android:3.0.0"
+
+    implementation("com.squareup.okhttp3:logging-interceptor:4.3.0")
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

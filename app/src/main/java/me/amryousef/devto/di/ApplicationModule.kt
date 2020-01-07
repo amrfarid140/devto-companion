@@ -4,9 +4,12 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import io.reactivex.internal.schedulers.IoScheduler
 import me.amryousef.devto.data.ApiService
+import me.amryousef.devto.data.AuthHeaderInterceptor
 import me.amryousef.devto.data.URIAdapter
 import me.amryousef.devto.presentation.ArticlesStateReducer
 import me.amryousef.devto.presentation.ArticlesViewModel
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -21,6 +24,11 @@ private val moshi =
         .build()
 
 private val retrofit = Retrofit.Builder()
+    .client(
+        OkHttpClient.Builder()
+            .addInterceptor(HttpLoggingInterceptor().apply { setLevel(HttpLoggingInterceptor.Level.BASIC) })
+            .addInterceptor(AuthHeaderInterceptor()).build()
+    )
     .baseUrl("https://dev.to/api/")
     .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(IoScheduler()))
     .addConverterFactory(MoshiConverterFactory.create(moshi))

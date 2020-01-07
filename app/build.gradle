@@ -36,7 +36,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    // For Kotlin projects
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -68,6 +68,9 @@ dependencies {
 
     api "com.babylon.orbit:orbit:3.0.0"
     api "com.babylon.orbit:orbit-android:3.0.0"
+
+    api "com.xwray:groupie:2.7.0"
+    api "com.xwray:groupie-kotlin-android-extensions:2.7.0"
 
     implementation("com.squareup.okhttp3:logging-interceptor:4.3.0")
 

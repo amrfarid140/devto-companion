@@ -10,6 +10,6 @@
     <color name="colorOnError">#FFFFFF</color>
     <color name="colorSurface">#131e2d</color>
     <color name="colorOnSurface">#ccd8df</color>
-    <color name="background">0d1118</color>
+    <color name="colorBackground">#0d1118</color>
     <color name="colorOnBackground">#dadbdc</color>
 </resources>

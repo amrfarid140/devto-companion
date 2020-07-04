@@ -5,15 +5,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
 import androidx.ui.core.setContent
 import androidx.ui.foundation.Text
+import androidx.ui.material.Scaffold
 import androidx.ui.tooling.preview.Preview
 import me.amryousef.devto.ui.DEVTheme
+import sample.Platform
+import sample.Sample
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             DEVTheme {
-                Greeting("Android")
+                Scaffold() {
+                    Greeting(Platform.name())
+                }
             }
         }
     }
@@ -28,6 +33,8 @@ fun Greeting(name: String) {
 @Composable
 fun DefaultPreview() {
     DEVTheme {
-        Greeting("Android")
+        Scaffold() {
+            Greeting("Android")
+        }
     }
 }

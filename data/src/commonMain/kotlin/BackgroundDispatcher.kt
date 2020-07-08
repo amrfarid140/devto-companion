@@ -1,0 +1,3 @@
+import kotlinx.coroutines.CoroutineDispatcher
+
+internal expect val IODispatcher: CoroutineDispatcher

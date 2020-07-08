@@ -10,8 +10,10 @@ import androidx.ui.material.Scaffold
 import androidx.ui.tooling.preview.Preview
 import api.KtorArticlesApi
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import me.amryousef.devto.ui.DEVTheme
+import presentation.StateStore
 import sample.Platform
 import sample.Sample
 
@@ -19,8 +21,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         GlobalScope.launch {
-            val x = KtorArticlesApi("BNJUyn8jhYZoiihKgnwiT7fW").getArticles()
-            Log.v("MainActivity", x.toString())
+            StateStore()
+                .state()
+                .collect {
+                    Log.v("MainActivity", it.toString())
+                }
         }
 
         setContent {

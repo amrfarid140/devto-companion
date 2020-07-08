@@ -1,12 +1,8 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
-repositories {
-    maven("https://dl.bintray.com/kotlin/kotlinx")
-}
-
 plugins {
-    kotlin("multiplatform")
-    kotlin("plugin.serialization") version "1.3.70"
+    id("kotlin-multiplatform")
+    id("kotlinx-serialization")
 }
 
 kotlin {
@@ -20,7 +16,18 @@ kotlin {
     iOSTarget("ios") {
         binaries {
             framework {
-                baseName = "Data"
+                baseName = "data"
+            }
+        }
+    }
+
+    targets.getByName<KotlinNativeTarget>("ios").compilations["main"].kotlinOptions.freeCompilerArgs +=
+        listOf("-Xobjc-generics", "-Xg0")
+
+    sourceSets {
+        all {
+            languageSettings.apply {
+                useExperimentalAnnotation("kotlinx.coroutines.ExperimentalCoroutinesApi")
             }
         }
     }
@@ -29,28 +36,28 @@ kotlin {
 
     sourceSets["commonMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
-        implementation("io.ktor:ktor-client-core:1.3.2")
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:0.20.0")
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.7")
-        implementation("io.ktor:ktor-client-json:1.3.2")
-        implementation("io.ktor:ktor-client-serialization:1.3.2")
+        implementation("io.ktor:ktor-client-core:1.3.2-1.4-M3")
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:0.20.0-1.4-M3")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.7-1.4-M3")
+        implementation("io.ktor:ktor-client-json:1.3.2-1.4-M3")
+        implementation("io.ktor:ktor-client-serialization:1.3.2-1.4-M3")
     }
 
     sourceSets["androidMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
-        implementation("io.ktor:ktor-client-android:1.3.2")
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0")
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.7")
-        implementation("io.ktor:ktor-client-json-jvm:1.3.2")
-        implementation("io.ktor:ktor-client-serialization-jvm:1.3.2")
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0-1.4-M3")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.7-1.4-M3")
+        implementation("io.ktor:ktor-client-android:1.3.2-1.4-M3")
+        implementation("io.ktor:ktor-client-json-jvm:1.3.2-1.4-M3")
+        implementation("io.ktor:ktor-client-serialization-jvm:1.3.2-1.4-M3")
     }
 
     sourceSets["iosMain"].dependencies {
-        implementation("io.ktor:ktor-client-ios:1.3.2")
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.20.0")
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.3.7")
-        implementation("io.ktor:ktor-client-json-native:1.3.2")
-        implementation("io.ktor:ktor-client-serialization-native:1.3.2")
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.20.0-1.4-M3")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.3.7-1.4-M3")
+        implementation("io.ktor:ktor-client-ios:1.3.2-1.4-M3")
+        implementation("io.ktor:ktor-client-json-native:1.3.2-1.4-M3")
+        implementation("io.ktor:ktor-client-serialization-native:1.3.2-1.4-M3")
     }
 }
 

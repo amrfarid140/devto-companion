@@ -37,8 +37,8 @@ kotlin {
     sourceSets["commonMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
         implementation("io.ktor:ktor-client-core:1.3.2-1.4-M3")
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:0.20.0-1.4-M3")
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.7-1.4-M3")
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0-1.4-M3")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7-1.4-M3")
         implementation("io.ktor:ktor-client-json:1.3.2-1.4-M3")
         implementation("io.ktor:ktor-client-serialization:1.3.2-1.4-M3")
     }
@@ -53,11 +53,11 @@ kotlin {
     }
 
     sourceSets["iosMain"].dependencies {
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.20.0-1.4-M3")
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.3.7-1.4-M3")
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-iosx64:0.20.0-1.4-M3")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-iosx64:1.3.7-1.4-M3")
         implementation("io.ktor:ktor-client-ios:1.3.2-1.4-M3")
-        implementation("io.ktor:ktor-client-json-native:1.3.2-1.4-M3")
-        implementation("io.ktor:ktor-client-serialization-native:1.3.2-1.4-M3")
+        implementation("io.ktor:ktor-client-json-iosx64:1.3.2-1.4-M3")
+        implementation("io.ktor:ktor-client-serialization-iosx64:1.3.2-1.4-M3")
     }
 }
 

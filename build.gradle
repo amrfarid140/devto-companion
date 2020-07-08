@@ -11,6 +11,9 @@ buildscript {
         maven {
             url "https://dl.bintray.com/kotlin/kotlin-eap/"
         }
+        jcenter {
+            uri "https://kotlin.bintray.com/kotlinx"
+        }
         google()
         jcenter()
         mavenCentral()
@@ -26,6 +29,9 @@ allprojects {
     repositories {
         maven {
             url "https://dl.bintray.com/kotlin/kotlin-eap/"
+        }
+        jcenter {
+            uri "https://kotlin.bintray.com/kotlinx"
         }
         google()
         jcenter()

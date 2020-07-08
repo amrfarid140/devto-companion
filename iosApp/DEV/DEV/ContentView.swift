@@ -19,14 +19,18 @@ struct ContentView: View {
 	}
 	
 	func test() {
-		DispatchQueue.global(qos: .background).async {
-			let articles = ApiService().getArticles()
+		KtorArticlesApi(apiKey: "BNJUyn8jhYZoiihKgnwiT7fW").getArticles { (articles:[Article]?, error: Error?) in
 			print(articles)
 		}
+	}
+//		DispatchQueue.global(qos: .background).async {
+//			let articles = ApiService().getArticles()
+//
+//		}
 //		ApiService().getArticles { articles in
 //			print(articles)
 //		}
-	}
+//	}
 }
 
 struct ContentView_Previews: PreviewProvider {

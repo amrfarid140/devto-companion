@@ -4,7 +4,7 @@ import platform.darwin.*
 import kotlin.coroutines.CoroutineContext
 
 internal actual val IODispatcher: CoroutineDispatcher = NsQueueDispatcher(
-    dispatch_get_main_queue()
+    dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT.toLong(), 0)
 )
 
 internal class NsQueueDispatcher(

@@ -8,15 +8,13 @@ import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.request.get
 import io.ktor.client.request.header
-import io.ktor.client.request.host
 import io.ktor.utils.io.core.use
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 
 @Suppress("EXPERIMENTAL_API_USAGE")
-class KtorArticlesApi(private val apiKey: String): ArticlesApi {
+class KtorArticlesApi(private val apiKey: String) : ArticlesApi {
     private companion object {
         const val baseUrl = "https://dev.to/api"
     }
@@ -24,7 +22,7 @@ class KtorArticlesApi(private val apiKey: String): ArticlesApi {
     private fun httpClient() = HttpClient {
         install(JsonFeature) {
             serializer = KotlinxSerializer(
-                json = Json(JsonConfiguration(ignoreUnknownKeys = true, isLenient = true))
+                    json = Json(JsonConfiguration(ignoreUnknownKeys = true, isLenient = true))
             )
         }
         defaultRequest {
@@ -33,10 +31,8 @@ class KtorArticlesApi(private val apiKey: String): ArticlesApi {
     }
 
     override suspend fun getArticles(): List<Article> {
-        return withContext(IODispatcher){
-            httpClient().use {
-                it.get("${baseUrl}/articles")
-            }
+        return httpClient().use {
+            it.get("${baseUrl}/articles")
         }
     }
 }

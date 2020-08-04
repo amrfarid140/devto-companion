@@ -1,28 +1,24 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
-    id("kotlin-multiplatform")
+    kotlin("multiplatform")
     id("kotlinx-serialization")
 }
 
 kotlin {
-    //select iOS target platform depending on the Xcode environment variables
-    val iOSTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
-            if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
-                ::iosArm64
-            else
-                ::iosX64
 
-    iOSTarget("ios") {
-        binaries {
-            framework {
-                baseName = "data"
+    targets {
+        ios {
+            binaries {
+                framework {
+                    baseName = "data"
+                    this.embedBitcode
+                }
             }
         }
-    }
 
-    targets.getByName<KotlinNativeTarget>("ios").compilations["main"].kotlinOptions.freeCompilerArgs +=
-        listOf("-Xobjc-generics", "-Xg0")
+        jvm("android")
+    }
 
     sourceSets {
         all {
@@ -30,35 +26,39 @@ kotlin {
                 useExperimentalAnnotation("kotlinx.coroutines.ExperimentalCoroutinesApi")
             }
         }
+
+        val commonMain by getting {
+            dependencies {
+                // Coroutines
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8-native-mt-1.4.0-rc") {
+                    isForce = true
+                }
+
+                // Ktor
+                implementation("io.ktor:ktor-client-core:1.3.2-1.4.0-rc")
+                implementation("io.ktor:ktor-client-json:1.3.2-1.4.0-rc")
+                implementation("io.ktor:ktor-client-serialization:1.3.2-1.4.0-rc")
+
+                // Serialize
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0-1.4.0-rc-95")
+            }
+        }
+
+        val androidMain by getting {
+            dependencies {
+                implementation("io.ktor:ktor-client-android:1.3.2-1.4.0-rc")
+            }
+        }
+
+        val iosMain by getting {
+            dependencies {
+                implementation("io.ktor:ktor-client-ios:1.3.2-1.4.0-rc")
+            }
+        }
     }
 
-    jvm("android")
-
-    sourceSets["commonMain"].dependencies {
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
-        implementation("io.ktor:ktor-client-core:1.3.2-1.4-M3")
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0-1.4-M3")
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7-native-mt-1.4-M2")
-        implementation("io.ktor:ktor-client-json:1.3.2-1.4-M3")
-        implementation("io.ktor:ktor-client-serialization:1.3.2-1.4-M3")
-    }
-
-    sourceSets["androidMain"].dependencies {
-        implementation("org.jetbrains.kotlin:kotlin-stdlib")
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0-1.4-M3")
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.7-native-mt-1.4-M23")
-        implementation("io.ktor:ktor-client-android:1.3.2-1.4-M3")
-        implementation("io.ktor:ktor-client-json-jvm:1.3.2-1.4-M3")
-        implementation("io.ktor:ktor-client-serialization-jvm:1.3.2-1.4-M3")
-    }
-
-    sourceSets["iosMain"].dependencies {
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-iosx64:0.20.0-1.4-M3")
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7-native-mt-1.4-M2")
-        implementation("io.ktor:ktor-client-ios:1.3.2-1.4-M3")
-        implementation("io.ktor:ktor-client-json-iosx64:1.3.2-1.4-M3")
-        implementation("io.ktor:ktor-client-serialization-iosx64:1.3.2-1.4-M3")
-    }
+    (kotlin.targets.first { it.name.contains("ios") } as KotlinNativeTarget)
+        .compilations["main"].kotlinOptions.freeCompilerArgs += listOf("-Xobjc-generics", "-Xg0")
 }
 
 val packForXcode by tasks.creating(Sync::class) {
@@ -68,8 +68,16 @@ val packForXcode by tasks.creating(Sync::class) {
     /// framework depending on the environment
     /// variables set by Xcode build
     val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
+    val sdkName: String? = System.getenv("SDK_NAME")
+    val isiOSDevice = sdkName.orEmpty().startsWith("iphoneos")
     val framework = kotlin.targets
-            .getByName<KotlinNativeTarget>("ios")
+            .getByName<KotlinNativeTarget>(
+                if(isiOSDevice) {
+                    "iosArm64"
+                } else {
+                    "iosX64"
+                }
+            )
             .binaries.getFramework(mode)
     inputs.property("mode", mode)
     dependsOn(framework.linkTask)

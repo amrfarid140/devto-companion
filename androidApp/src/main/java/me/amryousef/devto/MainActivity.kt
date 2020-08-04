@@ -13,25 +13,14 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import me.amryousef.devto.ui.DEVTheme
-import presentation.StateStore
-import sample.Platform
-import sample.Sample
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        GlobalScope.launch {
-            StateStore()
-                .state()
-                .collect {
-                    Log.v("MainActivity", it.toString())
-                }
-        }
-
         setContent {
             DEVTheme {
                 Scaffold() {
-                    Greeting(Platform.name())
+                    Greeting("Amr")
                 }
             }
         }

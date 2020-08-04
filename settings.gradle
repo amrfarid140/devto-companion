@@ -1,5 +1,0 @@
-rootProject.name = "DEV"
-include ':androidApp',  ':data'
-
-enableFeaturePreview('GRADLE_METADATA')
-

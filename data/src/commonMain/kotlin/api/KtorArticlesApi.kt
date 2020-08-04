@@ -1,17 +1,13 @@
 package api
 
-import IODispatcher
 import api.model.Article
-import io.ktor.client.HttpClient
-import io.ktor.client.features.defaultRequest
+import io.ktor.client.*
+import io.ktor.client.features.*
 import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.serializer.KotlinxSerializer
-import io.ktor.client.request.get
-import io.ktor.client.request.header
-import io.ktor.utils.io.core.use
-import kotlinx.coroutines.withContext
+import io.ktor.client.features.json.serializer.*
+import io.ktor.client.request.*
+import io.ktor.utils.io.core.*
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 class KtorArticlesApi(private val apiKey: String) : ArticlesApi {
@@ -22,7 +18,10 @@ class KtorArticlesApi(private val apiKey: String) : ArticlesApi {
     private fun httpClient() = HttpClient {
         install(JsonFeature) {
             serializer = KotlinxSerializer(
-                    json = Json(JsonConfiguration(ignoreUnknownKeys = true, isLenient = true))
+                    json = Json {
+                        isLenient = true
+                        ignoreUnknownKeys = true
+                    }
             )
         }
         defaultRequest {

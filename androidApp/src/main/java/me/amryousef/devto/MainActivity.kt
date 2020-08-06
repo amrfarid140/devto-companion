@@ -1,26 +1,28 @@
 package me.amryousef.devto
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.Composable
-import androidx.ui.core.setContent
-import androidx.ui.foundation.Text
-import androidx.ui.material.Scaffold
+import androidx.compose.foundation.Text
+import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.foundation.lazy.LazyColumnItems
+import androidx.compose.material.Scaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.setContent
 import androidx.ui.tooling.preview.Preview
-import api.KtorArticlesApi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import me.amryousef.devto.ui.DEVTheme
+import presentation.ArticlesListState
+import presentation.ArticlesListViewModel
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             DEVTheme {
-                Scaffold() {
-                    Greeting("Amr")
+                Scaffold {
+                    ArticlesListContainer(ArticlesListViewModel(CoroutineExecutor()))
                 }
             }
         }
@@ -28,16 +30,13 @@ class MainActivity : AppCompatActivity() {
 }
 
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    DEVTheme {
-        Scaffold() {
-            Greeting("Android")
+fun ArticlesListContainer(viewModel: ArticlesListViewModel) {
+    val state = viewModel.state.collectAsState(initial = ArticlesListState.Started)
+    val stateValue = state.value
+    return when(stateValue) {
+        is ArticlesListState.Ready -> LazyColumnFor(items = stateValue.data) {
+            Text(text = it.title)
         }
+        else -> Text(text = "Not Ready")
     }
 }

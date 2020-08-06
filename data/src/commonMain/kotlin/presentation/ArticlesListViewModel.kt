@@ -23,6 +23,10 @@ class ArticlesListViewModel constructor(
             )
     val state: Flow<ArticlesListState> get() = stateChannel.asFlow()
 
+    init {
+        loadData()
+    }
+
     fun loadData() {
         stateChannel.offer(ArticlesListState.Loading)
         launch {

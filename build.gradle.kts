@@ -9,7 +9,7 @@ allprojects {
 
 buildscript {
     extra.apply {
-        set("compose_version", "0.1.0-dev14")
+        set("compose_version", "0.1.0-dev16")
         set("kotlin_version","1.4.0-rc")
         set("ktor_version","1.3.2-1.4-M3")
         set("coroutines_version","1.3.7-1.4-M3")

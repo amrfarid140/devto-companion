@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -35,10 +37,18 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion = rootProject.extra.get("compose_version") as? String
-        kotlinCompilerVersion = "1.3.70-dev-withExperimentalGoogleExtensions-20200424"
+        kotlinCompilerVersion = "1.4.0-rc"
     }
     packagingOptions {
         exclude("/META-INF/*.kotlin_module")
+    }
+}
+
+
+tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions {
+        jvmTarget = "1.8"
+        freeCompilerArgs = listOf("-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check")
     }
 }
 
@@ -48,8 +58,8 @@ dependencies {
     implementation("androidx.core:core-ktx:1.3.0")
     implementation("androidx.appcompat:appcompat:1.1.0")
     implementation("com.google.android.material:material:1.1.0")
-    implementation("androidx.ui:ui-layout:${rootProject.extra.get("compose_version")}")
-    implementation("androidx.ui:ui-material:${rootProject.extra.get("compose_version")}")
+    implementation("androidx.compose.foundation:foundation-layout:${rootProject.extra.get("compose_version")}")
+    implementation("androidx.compose.material:material:${rootProject.extra.get("compose_version")}")
     implementation("androidx.ui:ui-tooling:${rootProject.extra.get("compose_version")}")
     testImplementation("junit:junit:4.13")
     androidTestImplementation("androidx.test.ext:junit:1.1.1")

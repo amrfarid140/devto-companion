@@ -30,9 +30,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 // Coroutines
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8-native-mt-1.4.0-rc") {
-                    isForce = true
-                }
+                api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8-native-mt-1.4.0-rc")
 
                 // Ktor
                 implementation("io.ktor:ktor-client-core:1.3.2-1.4.0-rc")

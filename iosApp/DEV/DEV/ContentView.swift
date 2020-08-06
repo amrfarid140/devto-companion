@@ -10,15 +10,18 @@ import SwiftUI
 import data
 
 struct ContentView: View {
-	private let viewModel = ArticlesListViewModel()
+	private let viewModel = ArticlesListViewModel(executor: CocoaExecutor())
 	@State var state: ArticlesListState = ArticlesListState.Loading()
-    var body: some View {
+	var body: some View {
 		StateText(state: state)
 			.onAppear {
 				viewModel.loadData()
-				viewModel.watchState {
-					self.state = $0
-				}
+				viewModel.state.collect(collector: CocoaFlowCollector<ArticlesListState>{ (state) in
+					if let recievedState = state {
+						self.state = recievedState
+					}
+				}) { (_, _) in }
+				
 			}
 	}
 }
@@ -33,7 +36,7 @@ struct StateText: View {
 		case is ArticlesListState.Loading:
 			return AnyView(ProgressView())
 		case is ArticlesListState.Ready:
-			return AnyView(ArticlesList(items: (state as! ArticlesListState.Ready).articles ))
+			return AnyView(ArticlesList(items: (state as! ArticlesListState.Ready).data ))
 		default:
 			return AnyView(ProgressView())
 		}
@@ -41,11 +44,11 @@ struct StateText: View {
 }
 
 struct ArticlesList: View {
-	let items: [ArticlesListStateItem]
+	let items: [Article]
 	
 	var body: some View {
 		NavigationView {
-			List(self.items, id: \.name) {
+			List(self.items, id: \.title) {
 				ArticleRow(item: $0)
 			}
 			.navigationTitle("Articles")
@@ -54,19 +57,13 @@ struct ArticlesList: View {
 }
 
 struct ArticleRow: View {
-	let item: ArticlesListStateItem
+	let item: Article
 	var body: some View {
 		VStack(alignment: .leading, spacing: 8) {
-			Text(item.name)
+			Text(item.title)
 				.font(.title)
-			Text(item.author)
+			Text(item.user.name)
 				.font(.caption)
 		}
 	}
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-		ArticleRow(item: ArticlesListStateItem(name: "Test Article name", author: "Amr Yousef"))
-    }
 }

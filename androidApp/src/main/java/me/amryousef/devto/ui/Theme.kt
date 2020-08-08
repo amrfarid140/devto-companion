@@ -13,9 +13,15 @@ private val DarkColorPalette = darkColors(
 )
 
 private val LightColorPalette = lightColors(
-    primary = purple500,
-    primaryVariant = purple700,
-    secondary = teal200
+    background = lightWindowBackground,
+    surface = lightComponentBackground,
+    onBackground = lightTextOnBackground,
+    onSurface = lightTextOnBackground,
+    secondary = lightAccentColor,
+    onSecondary = lightOnSecondaryTextColor,
+    primary = lightComponentBackground,
+    onPrimary = lightTextOnBackground,
+    primaryVariant = lightPrimaryVariant
 
     /* Other default colors to override
 background = Color.White,
@@ -29,15 +35,15 @@ onSurface = Color.Black,
 
 @Composable
 fun DEVTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
-    } else {
-        LightColorPalette
-    }
-    MaterialTheme(
-        colors = colors,
-        typography = typography,
-        shapes = shapes,
-        content = content
-    )
+  val colors = if (darkTheme) {
+    DarkColorPalette
+  } else {
+    LightColorPalette
+  }
+  MaterialTheme(
+      colors = colors,
+      typography = typography,
+      shapes = shapes,
+      content = content
+  )
 }

@@ -1,29 +1,24 @@
 package me.amryousef.devto
 
 import android.os.Bundle
-import me.amryousef.devto.R
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Box
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumnFor
-import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Scaffold
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.BlendMode
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.setContent
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.ui.tooling.preview.Preview
-import me.amryousef.devto.ui.*
-import presentation.ArticlesListState
+import me.amryousef.devto.ui.DEVTheme
+import me.amryousef.devto.ui.lightTextOnBackground
 import presentation.ArticlesListViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -77,17 +72,5 @@ fun DEVScaffold(content: @Composable() (InnerPadding) -> Unit) {
         },
         bodyContent = content
     )
-  }
-}
-
-@Composable
-fun ArticlesListContainer(viewModel: ArticlesListViewModel) {
-  val state = viewModel.state.collectAsState(initial = ArticlesListState.Started)
-  val stateValue = state.value
-  return when (stateValue) {
-    is ArticlesListState.Ready -> LazyColumnFor(items = stateValue.data) {
-      Text(text = it.title)
-    }
-    else -> Text(text = "Not Ready")
   }
 }

@@ -60,7 +60,7 @@ dependencies {
     implementation("com.google.android.material:material:1.1.0")
     implementation("androidx.compose.foundation:foundation-layout:${rootProject.extra.get("compose_version")}")
     implementation("androidx.compose.material:material:${rootProject.extra.get("compose_version")}")
-    implementation("androidx.ui:ui-tooling:${rootProject.extra.get("compose_version")}")
+    implementation("io.coil-kt:coil:0.11.0")
     testImplementation("junit:junit:4.13")
     androidTestImplementation("androidx.test.ext:junit:1.1.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")

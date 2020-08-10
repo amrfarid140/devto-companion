@@ -15,7 +15,6 @@ struct ContentView: View {
 	var body: some View {
 		StateText(state: state)
 			.onAppear {
-				
 				viewModel.state.collect(collector: CocoaFlowCollector<ArticlesListState>{ (state) in
 					if let recievedState = state {
 						self.state = recievedState

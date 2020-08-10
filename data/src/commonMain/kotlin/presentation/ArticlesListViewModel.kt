@@ -3,10 +3,16 @@ package presentation
 import Executor
 import MainDispatcher
 import api.KtorArticlesApi
-import kotlinx.coroutines.*
+import api.model.Article
+import executor
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.launch
+import runBlocking
 import kotlin.coroutines.CoroutineContext
 
 class ArticlesListViewModel constructor() : CoroutineScope {
@@ -27,15 +33,17 @@ class ArticlesListViewModel constructor() : CoroutineScope {
     private fun loadData() {
         stateChannel.offer(ArticlesListState.Loading)
         launch {
-            try {
-                val articles = api.getArticles()
-                stateChannel.offer(ArticlesListState.Ready(articles, ""))
-            } catch (exception: Exception) {
-                stateChannel.offer(ArticlesListState.Error)
-            }
-
+            executor.executeInBackground(
+                block = ::stuff,
+                completion = {
+                    stateChannel.offer(ArticlesListState.Ready(it, ""))
+                }
+            )
         }
     }
+
+    private suspend fun stuff() =
+        api.getArticles()
 
     fun stop() {
         job.cancelChildren()

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A049186924DCA10C0068044F /* CocoaExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A049186824DCA10C0068044F /* CocoaExecutor.swift */; };
 		A06B921B24B09F78000821D6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06B921A24B09F78000821D6 /* AppDelegate.swift */; };
 		A06B921D24B09F78000821D6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06B921C24B09F78000821D6 /* SceneDelegate.swift */; };
 		A06B921F24B09F78000821D6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06B921E24B09F78000821D6 /* ContentView.swift */; };
@@ -16,6 +15,7 @@
 		A06B922724B09F80000821D6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A06B922524B09F80000821D6 /* LaunchScreen.storyboard */; };
 		A06E844924D73E1700EC6B90 /* data.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06B923124B0A1C7000821D6 /* data.framework */; };
 		A06E844A24D73E1700EC6B90 /* data.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A06B923124B0A1C7000821D6 /* data.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A0F1616624E16536001092D5 /* BackgroundExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = A0F1616524E16536001092D5 /* BackgroundExecutor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,7 +33,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A049186824DCA10C0068044F /* CocoaExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaExecutor.swift; sourceTree = "<group>"; };
 		A06B921724B09F78000821D6 /* DEV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DEV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A06B921A24B09F78000821D6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A06B921C24B09F78000821D6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -44,6 +43,9 @@
 		A06B922824B09F80000821D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A06B922F24B0A067000821D6 /* data.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = data.framework; path = ../../data/build/bin/ios/debugFramework/data.framework; sourceTree = "<group>"; };
 		A06B923124B0A1C7000821D6 /* data.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = data.framework; path = "../../data/build/xcode-frameworks/data.framework"; sourceTree = "<group>"; };
+		A0F1616424E16536001092D5 /* DEV-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DEV-Bridging-Header.h"; sourceTree = "<group>"; };
+		A0F1616524E16536001092D5 /* BackgroundExecutor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BackgroundExecutor.m; sourceTree = "<group>"; };
+		A0F1616724E1671F001092D5 /* BackgroundExecutor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackgroundExecutor.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,7 +87,9 @@
 				A06B922524B09F80000821D6 /* LaunchScreen.storyboard */,
 				A06B922824B09F80000821D6 /* Info.plist */,
 				A06B922224B09F80000821D6 /* Preview Content */,
-				A049186824DCA10C0068044F /* CocoaExecutor.swift */,
+				A0F1616524E16536001092D5 /* BackgroundExecutor.m */,
+				A0F1616724E1671F001092D5 /* BackgroundExecutor.h */,
+				A0F1616424E16536001092D5 /* DEV-Bridging-Header.h */,
 			);
 			path = DEV;
 			sourceTree = "<group>";
@@ -141,6 +145,7 @@
 				TargetAttributes = {
 					A06B921624B09F77000821D6 = {
 						CreatedOnToolsVersion = 11.5;
+						LastSwiftMigration = 1200;
 					};
 				};
 			};
@@ -200,9 +205,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0F1616624E16536001092D5 /* BackgroundExecutor.m in Sources */,
 				A06B921B24B09F78000821D6 /* AppDelegate.swift in Sources */,
 				A06B921D24B09F78000821D6 /* SceneDelegate.swift in Sources */,
-				A049186924DCA10C0068044F /* CocoaExecutor.swift in Sources */,
 				A06B921F24B09F78000821D6 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -341,6 +346,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"DEV/Preview Content\"";
 				DEVELOPMENT_TEAM = P8C49CPC4X;
@@ -355,6 +361,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.amryousef.DEV;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "DEV/DEV-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -364,6 +372,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"DEV/Preview Content\"";
 				DEVELOPMENT_TEAM = P8C49CPC4X;
@@ -378,6 +387,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.amryousef.DEV;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "DEV/DEV-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -30,7 +30,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 // Coroutines
-                api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8-native-mt-1.4.0-rc")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8-native-mt-1.4.0-rc")
 
                 // Ktor
                 implementation("io.ktor:ktor-client-core:1.3.2-1.4.0-rc")
@@ -67,7 +67,7 @@ val packForXcode by tasks.creating(Sync::class) {
     /// variables set by Xcode build
     val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
     val sdkName: String? = System.getenv("SDK_NAME")
-    val isiOSDevice = sdkName.orEmpty().startsWith("iphoneos")
+    val isiOSDevice = false
     val framework = kotlin.targets
             .getByName<KotlinNativeTarget>(
                 if(isiOSDevice) {

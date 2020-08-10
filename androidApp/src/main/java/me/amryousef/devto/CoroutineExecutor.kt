@@ -11,7 +11,7 @@ class CoroutineExecutor : CoroutineScope, Executor {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.IO
 
-    override fun <OUTPUT> executeInBackground(block: () -> OUTPUT, completion: (OUTPUT) -> Unit) {
+    override fun <OUTPUT> executeInBackground(block: suspend () -> OUTPUT, completion: (OUTPUT) -> Unit) {
         launch {
             val result = block()
             withContext(Dispatchers.Main) {

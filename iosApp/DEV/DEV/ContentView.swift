@@ -10,12 +10,12 @@ import SwiftUI
 import data
 
 struct ContentView: View {
-	private let viewModel = ArticlesListViewModel(executor: CocoaExecutor())
+	private let viewModel = ArticlesListViewModel()
 	@State var state: ArticlesListState = ArticlesListState.Loading()
 	var body: some View {
 		StateText(state: state)
 			.onAppear {
-				viewModel.loadData()
+				
 				viewModel.state.collect(collector: CocoaFlowCollector<ArticlesListState>{ (state) in
 					if let recievedState = state {
 						self.state = recievedState

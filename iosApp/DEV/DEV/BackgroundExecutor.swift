@@ -10,10 +10,10 @@ import data
 
 class BackgroundExecutor: Executor {
 	func executeInBackground(block: KotlinSuspendFunction0, completion: @escaping (Any?) -> Void) {
-			block.invoke(completionHandler: { result, error in
-				DispatchQueue.main.async {
-					completion(result)
-				}
-			})
+		BackgroundKt.invoke0(block: block, completionHandler: { result, error in
+			DispatchQueue.main.async {
+				completion(result)
+			}
+		})
 	}
 }

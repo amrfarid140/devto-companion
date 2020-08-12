@@ -31,7 +31,9 @@ kotlin {
             dependencies {
                 implementation(project(":KMPNetworking"))
                 // Coroutines
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8-native-mt-1.4.0-rc")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8-native-mt-1.4.0-rc"){
+                    isForce = true
+                }
 
                 // Ktor
                 implementation("io.ktor:ktor-client-core:1.3.2-1.4.0-rc")

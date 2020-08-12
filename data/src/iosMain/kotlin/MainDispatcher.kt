@@ -1,11 +1,8 @@
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Runnable
 import platform.darwin.*
 import kotlin.coroutines.CoroutineContext
-
-internal actual fun <OUTPUT> runBlocking(block: suspend  () -> OUTPUT): OUTPUT {
-    return kotlinx.coroutines.runBlocking { block() }
-}
 
 internal class NsQueueDispatcher(
     private val dispatchQueue: dispatch_queue_t
@@ -19,3 +16,6 @@ internal class NsQueueDispatcher(
 
 internal actual val MainDispatcher: CoroutineDispatcher =
     NsQueueDispatcher(dispatch_get_main_queue())
+
+internal actual val BackgroundDispatcher: CoroutineDispatcher =
+    Dispatchers.Default

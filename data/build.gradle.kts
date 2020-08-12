@@ -29,6 +29,7 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
+                implementation(project(":KMPNetworking"))
                 // Coroutines
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8-native-mt-1.4.0-rc")
 

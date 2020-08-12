@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContent {
       DEVScaffold {
-        ArticlesListContainer(ArticlesListViewModel(CoroutineExecutor()))
+        ArticlesListContainer(ArticlesListViewModel())
       }
     }
   }

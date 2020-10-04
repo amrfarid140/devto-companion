@@ -15,7 +15,6 @@
 		A06B922724B09F80000821D6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A06B922524B09F80000821D6 /* LaunchScreen.storyboard */; };
 		A06E844924D73E1700EC6B90 /* data.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06B923124B0A1C7000821D6 /* data.framework */; };
 		A06E844A24D73E1700EC6B90 /* data.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A06B923124B0A1C7000821D6 /* data.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		A0F1616924E17F68001092D5 /* BackgroundExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F1616824E17F68001092D5 /* BackgroundExecutor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,7 +42,6 @@
 		A06B922824B09F80000821D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A06B922F24B0A067000821D6 /* data.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = data.framework; path = ../../data/build/bin/ios/debugFramework/data.framework; sourceTree = "<group>"; };
 		A06B923124B0A1C7000821D6 /* data.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = data.framework; path = "../../data/build/xcode-frameworks/data.framework"; sourceTree = "<group>"; };
-		A0F1616824E17F68001092D5 /* BackgroundExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundExecutor.swift; sourceTree = "<group>"; };
 		A0F1616A24E17FF7001092D5 /* DEV-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DEV-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -87,7 +85,6 @@
 				A06B922524B09F80000821D6 /* LaunchScreen.storyboard */,
 				A06B922824B09F80000821D6 /* Info.plist */,
 				A06B922224B09F80000821D6 /* Preview Content */,
-				A0F1616824E17F68001092D5 /* BackgroundExecutor.swift */,
 			);
 			path = DEV;
 			sourceTree = "<group>";
@@ -205,7 +202,6 @@
 			files = (
 				A06B921B24B09F78000821D6 /* AppDelegate.swift in Sources */,
 				A06B921D24B09F78000821D6 /* SceneDelegate.swift in Sources */,
-				A0F1616924E17F68001092D5 /* BackgroundExecutor.swift in Sources */,
 				A06B921F24B09F78000821D6 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

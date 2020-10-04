@@ -39,7 +39,7 @@ fun DEVScaffold(content: @Composable() (InnerPadding) -> Unit) {
         topBar = {
           TopAppBar {
             Row(
-                verticalGravity = Alignment.CenterVertically,
+                verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Start
             ) {
               Box(

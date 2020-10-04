@@ -1,7 +1,7 @@
 rootProject.name = "DEV"
 rootProject.buildFileName = "build.gradle.kts"
 
-include(":androidApp",  ":data", ":KMPNetworking")
+include(":androidApp",  ":data")
 
 enableFeaturePreview("GRADLE_METADATA")
 

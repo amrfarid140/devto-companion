@@ -12,7 +12,6 @@ kotlin {
             binaries {
                 framework {
                     baseName = "data"
-                    this.embedBitcode
                 }
             }
         }
@@ -29,31 +28,30 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
-                implementation(project(":KMPNetworking"))
                 // Coroutines
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8-native-mt-1.4.0-rc"){
+                implementation(Dependencies.coroutines){
                     isForce = true
                 }
 
                 // Ktor
-                implementation("io.ktor:ktor-client-core:1.3.2-1.4.0-rc")
-                implementation("io.ktor:ktor-client-json:1.3.2-1.4.0-rc")
-                implementation("io.ktor:ktor-client-serialization:1.3.2-1.4.0-rc")
+                implementation(Dependencies.ktorCore)
+                implementation(Dependencies.ktorJson)
+                implementation(Dependencies.ktorSerialization)
 
                 // Serialize
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0-1.4.0-rc-95")
+                implementation(Dependencies.serialization)
             }
         }
 
         val androidMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-android:1.3.2-1.4.0-rc")
+                implementation(Dependencies.ktorAndroid)
             }
         }
 
         val iosMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-ios:1.3.2-1.4.0-rc")
+                implementation(Dependencies.ktoriOS)
             }
         }
     }

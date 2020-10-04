@@ -7,12 +7,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion(29)
+    compileSdkVersion(30)
 
     defaultConfig {
         applicationId = "me.amryousef.devto"
         minSdkVersion(23)
-        targetSdkVersion(29)
+        targetSdkVersion(30)
         versionCode = 1
         versionName = "1.0"
 
@@ -36,8 +36,8 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = rootProject.extra.get("compose_version") as? String
-        kotlinCompilerVersion = "1.4.0-rc"
+        kotlinCompilerExtensionVersion = Versions.composeVersion
+        kotlinCompilerVersion = Versions.kotlinVersion
     }
     packagingOptions {
         exclude("/META-INF/*.kotlin_module")
@@ -54,13 +54,14 @@ tasks.withType<KotlinCompile>().configureEach {
 
 dependencies {
     implementation(project(":data"))
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:${rootProject.extra.get("kotlin_version")}")
-    implementation("androidx.core:core-ktx:1.3.0")
-    implementation("androidx.appcompat:appcompat:1.1.0")
-    implementation("com.google.android.material:material:1.1.0")
-    implementation("androidx.compose.foundation:foundation-layout:${rootProject.extra.get("compose_version")}")
-    implementation("androidx.compose.material:material:${rootProject.extra.get("compose_version")}")
-    implementation("io.coil-kt:coil:0.11.0")
+    implementation(Dependencies.kotlinStd)
+    implementation(Dependencies.androidCore)
+    implementation(Dependencies.appCompat)
+    implementation(Dependencies.materialComponents)
+    implementation(Dependencies.coroutinesAndroid)
+    Dependencies.jetpackCompose.forEach { (_, value) -> implementation(value) }
+
+    implementation(Dependencies.coil)
     testImplementation("junit:junit:4.13")
     androidTestImplementation("androidx.test.ext:junit:1.1.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")

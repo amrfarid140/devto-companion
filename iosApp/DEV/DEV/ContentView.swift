@@ -7,19 +7,19 @@
 //
 
 import SwiftUI
-import data
+import presentation
 
 struct ContentView: View {
-	private let viewModel = ArticlesListViewModel()
+	private let viewModel = CFArticlesListViewModel()
 	@State var state: ArticlesListState = ArticlesListState.Loading()
 	var body: some View {
 		StateText(state: state)
 			.onAppear {
-				viewModel.state.collect(collector: CocoaFlowCollector<ArticlesListState>{ (state) in
-					if let recievedState = state {
-						self.state = recievedState
-					}
-				}) { (_, _) in }
+				viewModel.onChanged { recievedState in
+					self.state = recievedState
+				}
+			}.onDisappear {
+				viewModel.cancel()
 			}
 	}
 }
@@ -42,7 +42,7 @@ struct StateText: View {
 }
 
 struct ArticlesList: View {
-	let items: [Article]
+	let items: [ArticlesListState.ReadyArticleState]
 	
 	var body: some View {
 		NavigationView {
@@ -55,12 +55,12 @@ struct ArticlesList: View {
 }
 
 struct ArticleRow: View {
-	let item: Article
+	let item: ArticlesListState.ReadyArticleState
 	var body: some View {
 		VStack(alignment: .leading, spacing: 8) {
 			Text(item.title)
 				.font(.title)
-			Text(item.user.name)
+			Text(item.userName)
 				.font(.caption)
 		}
 	}

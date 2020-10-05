@@ -8,20 +8,19 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import api.model.Article
-import presentation.ArticlesListState
-import presentation.ArticlesListViewModel
+import me.amryousef.devto.presentation.ArticlesListState
+import me.amryousef.devto.presentation.ArticlesListViewModel
 
 
 @Composable
 fun ArticlesListContainer(viewModel: ArticlesListViewModel) {
-    val state = viewModel.state.collectAsState(initial = ArticlesListState.Started)
-    val stateValue = state.value
-    return when (stateValue) {
+    val state = viewModel.state.collectAsState(initial = ArticlesListState.Loading)
+    return when (val stateValue = state.value) {
         is ArticlesListState.Ready -> LazyColumnFor(items = stateValue.data) {
             Box(
                 modifier = Modifier.padding(
@@ -34,17 +33,18 @@ fun ArticlesListContainer(viewModel: ArticlesListViewModel) {
                 ArticleListItem(article = it)
             }
         }
-        else -> Text(text = "Not Ready")
+        is ArticlesListState.Loading -> CircularProgressIndicator()
+        is ArticlesListState.Error -> Text(text = "error")
     }
 }
 
 @Composable
-fun ArticleListItem(article: Article) {
+fun ArticleListItem(article: ArticlesListState.Ready.ArticleState) {
     Card (modifier = Modifier.fillMaxWidth()){
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            remoteImage(imageUrl = article.coverImageUrl ?: "")
+            remoteImage(imageUrl = article.coverImageUrl)
         }
     }
 }

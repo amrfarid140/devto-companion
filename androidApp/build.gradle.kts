@@ -53,13 +53,14 @@ tasks.withType<KotlinCompile>().configureEach {
 }
 
 dependencies {
-    implementation(project(":data"))
+    implementation(project(":presentation"))
     implementation(Dependencies.kotlinStd)
     implementation(Dependencies.androidCore)
     implementation(Dependencies.appCompat)
     implementation(Dependencies.materialComponents)
     implementation(Dependencies.coroutinesAndroid)
     Dependencies.jetpackCompose.forEach { (_, value) -> implementation(value) }
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-beta01")
 
     implementation(Dependencies.coil)
     testImplementation("junit:junit:4.13")

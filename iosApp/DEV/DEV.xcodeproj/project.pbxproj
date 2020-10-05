@@ -7,24 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A01241CD252BBA5E0060280B /* presentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A01241CB252BBA580060280B /* presentation.framework */; };
+		A01241CE252BBA5E0060280B /* presentation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A01241CB252BBA580060280B /* presentation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A06B921B24B09F78000821D6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06B921A24B09F78000821D6 /* AppDelegate.swift */; };
 		A06B921D24B09F78000821D6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06B921C24B09F78000821D6 /* SceneDelegate.swift */; };
 		A06B921F24B09F78000821D6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06B921E24B09F78000821D6 /* ContentView.swift */; };
 		A06B922124B09F80000821D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A06B922024B09F80000821D6 /* Assets.xcassets */; };
 		A06B922424B09F80000821D6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A06B922324B09F80000821D6 /* Preview Assets.xcassets */; };
 		A06B922724B09F80000821D6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A06B922524B09F80000821D6 /* LaunchScreen.storyboard */; };
-		A06E844924D73E1700EC6B90 /* data.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06B923124B0A1C7000821D6 /* data.framework */; };
-		A06E844A24D73E1700EC6B90 /* data.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A06B923124B0A1C7000821D6 /* data.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		A06E844B24D73E1700EC6B90 /* Embed Frameworks */ = {
+		A01241CF252BBA5E0060280B /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A06E844A24D73E1700EC6B90 /* data.framework in Embed Frameworks */,
+				A01241CE252BBA5E0060280B /* presentation.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -32,6 +32,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A01241CB252BBA580060280B /* presentation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = presentation.framework; path = "../../presentation/build/xcode-frameworks/presentation.framework"; sourceTree = "<group>"; };
 		A06B921724B09F78000821D6 /* DEV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DEV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A06B921A24B09F78000821D6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A06B921C24B09F78000821D6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -50,7 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A06E844924D73E1700EC6B90 /* data.framework in Frameworks */,
+				A01241CD252BBA5E0060280B /* presentation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +101,7 @@
 		A06B922E24B0A067000821D6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A01241CB252BBA580060280B /* presentation.framework */,
 				A06B923124B0A1C7000821D6 /* data.framework */,
 				A06B922F24B0A067000821D6 /* data.framework */,
 			);
@@ -117,7 +119,7 @@
 				A06B921324B09F77000821D6 /* Sources */,
 				A06B921424B09F77000821D6 /* Frameworks */,
 				A06B921524B09F77000821D6 /* Resources */,
-				A06E844B24D73E1700EC6B90 /* Embed Frameworks */,
+				A01241CF252BBA5E0060280B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -191,7 +193,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\ncd \"$SRCROOT/../../\"\n./gradlew :data:packForXCode -PXCODE_CONFIGURATION=${CONFIGURATION}\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\ncd \"$SRCROOT/../../\"\n./gradlew :presentation:packForXCode -PXCODE_CONFIGURATION=${CONFIGURATION}\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -345,7 +347,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"DEV/Preview Content\"";
 				DEVELOPMENT_TEAM = P8C49CPC4X;
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../data/build/xcode-frameworks";
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../presentation/build/xcode-frameworks";
 				INFOPLIST_FILE = DEV/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -371,7 +373,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"DEV/Preview Content\"";
 				DEVELOPMENT_TEAM = P8C49CPC4X;
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../data/build/xcode-frameworks";
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../presentation/build/xcode-frameworks";
 				INFOPLIST_FILE = DEV/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (

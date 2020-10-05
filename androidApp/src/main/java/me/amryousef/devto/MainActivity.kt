@@ -17,16 +17,17 @@ import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.lifecycleScope
+import me.amryousef.devto.presentation.ArticlesListViewModel
 import me.amryousef.devto.ui.DEVTheme
 import me.amryousef.devto.ui.lightTextOnBackground
-import presentation.ArticlesListViewModel
 
 class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
       DEVScaffold {
-        ArticlesListContainer(ArticlesListViewModel())
+          ArticlesListContainer(ArticlesListViewModel(lifecycleScope))
       }
     }
   }

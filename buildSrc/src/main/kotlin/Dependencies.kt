@@ -12,7 +12,8 @@ object Dependencies {
             "ui" to "androidx.compose.ui:ui:${Versions.composeVersion}",
             "tooling" to "androidx.ui:ui-tooling:${Versions.composeVersion}",
             "foundation" to "androidx.compose.foundation:foundation:${Versions.composeVersion}",
-            "materialDesign" to "androidx.compose.material:material:${Versions.composeVersion}"
+            "materialDesign" to "androidx.compose.material:material:${Versions.composeVersion}",
+            "materialDesignIcons" to "androidx.compose.material:material-icons-extended:${Versions.composeVersion}"
         )
 
     const val kotlinStd = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlinVersion}"

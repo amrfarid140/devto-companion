@@ -2,6 +2,7 @@ package me.amryousef.devto.presentation
 
 sealed class ArticlesListState {
     data class Ready(
+        val currentPage: Int,
         val data: List<ArticleState>,
         val searchQuery: String
     ): ArticlesListState() {

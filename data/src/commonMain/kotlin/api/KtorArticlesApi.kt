@@ -23,10 +23,11 @@ class KtorArticlesApi : ArticlesApi {
         }
     }
 
-    override suspend fun getArticles(): List<Article> {
+    override suspend fun getArticles(page: Int): List<Article> {
         return withContext(KtorDispatcher) {
             httpClient.get {
                 url("https://dev.to/api/articles")
+                parameter("page", page)
                 headers {
                     append("api-key", "BNJUyn8jhYZoiihKgnwiT7fW")
                 }

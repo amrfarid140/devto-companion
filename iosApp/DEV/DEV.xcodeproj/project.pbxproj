@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A0039F702531BAF00059B1B9 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0039F6F2531BAF00059B1B9 /* Color.swift */; };
 		A01241CD252BBA5E0060280B /* presentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A01241CB252BBA580060280B /* presentation.framework */; };
 		A01241CE252BBA5E0060280B /* presentation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A01241CB252BBA580060280B /* presentation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A01241D2252CFF580060280B /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01241D1252CFF580060280B /* ImageLoader.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A0039F6F2531BAF00059B1B9 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		A01241CB252BBA580060280B /* presentation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = presentation.framework; path = "../../presentation/build/xcode-frameworks/presentation.framework"; sourceTree = "<group>"; };
 		A01241D1252CFF580060280B /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		A01241D4252CFFC10060280B /* AsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncImage.swift; sourceTree = "<group>"; };
@@ -62,6 +64,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A0039F6E2531BADC0059B1B9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A0039F6F2531BAF00059B1B9 /* Color.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		A01241D0252CFF4A0060280B /* AsyncImage */ = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +101,7 @@
 		A06B921924B09F78000821D6 /* DEV */ = {
 			isa = PBXGroup;
 			children = (
+				A0039F6E2531BADC0059B1B9 /* Extensions */,
 				A01241D0252CFF4A0060280B /* AsyncImage */,
 				A0F1616A24E17FF7001092D5 /* DEV-Bridging-Header.h */,
 				A06B921A24B09F78000821D6 /* AppDelegate.swift */,
@@ -221,6 +232,7 @@
 				A06B921D24B09F78000821D6 /* SceneDelegate.swift in Sources */,
 				A01241D2252CFF580060280B /* ImageLoader.swift in Sources */,
 				A06B921F24B09F78000821D6 /* ContentView.swift in Sources */,
+				A0039F702531BAF00059B1B9 /* Color.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

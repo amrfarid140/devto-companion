@@ -41,7 +41,7 @@ fun DEVTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() 
     LightColorPalette
   }
   MaterialTheme(
-      colors = colors,
+      colors = LightColorPalette,
       typography = typography,
       shapes = shapes,
       content = content

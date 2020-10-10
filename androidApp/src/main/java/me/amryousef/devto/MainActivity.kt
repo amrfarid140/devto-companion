@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 }
 
 @Composable
-fun DEVScaffold(content: @Composable() (InnerPadding) -> Unit) {
+fun DEVScaffold(content: @Composable() (PaddingValues) -> Unit) {
   return DEVTheme {
     Scaffold(
         topBar = {

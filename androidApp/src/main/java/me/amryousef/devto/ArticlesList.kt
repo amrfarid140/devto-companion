@@ -5,9 +5,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.amryousef.devto.presentation.ArticlesListState
@@ -33,7 +35,13 @@ fun ArticlesListContainer(viewModel: ArticlesListViewModel) {
                 ArticleListItem(article = it)
             }
         }
-        is ArticlesListState.Loading -> CircularProgressIndicator()
+        is ArticlesListState.Loading -> Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            CircularProgressIndicator(color = MaterialTheme.colors.secondary)
+        }
         is ArticlesListState.Error -> Text(text = "error")
     }
 }
@@ -45,6 +53,10 @@ fun ArticleListItem(article: ArticlesListState.Ready.ArticleState) {
             modifier = Modifier.fillMaxSize()
         ) {
             remoteImage(imageUrl = article.coverImageUrl)
+            Column(modifier = Modifier.padding(12.dp)) {
+                Text(text = article.title, style = MaterialTheme.typography.h6)
+                Text(text = article.userName, style = MaterialTheme.typography.subtitle2)
+            }
         }
     }
 }

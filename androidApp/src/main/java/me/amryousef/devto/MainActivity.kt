@@ -18,60 +18,70 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.callbackFlow
+import me.amryousef.devto.presentation.ArticlesListState
 import me.amryousef.devto.presentation.ArticlesListViewModel
 import me.amryousef.devto.ui.DEVTheme
 import me.amryousef.devto.ui.lightTextOnBackground
 
 class MainActivity : AppCompatActivity() {
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContent {
-      DEVScaffold {
-          ArticlesListContainer(ArticlesListViewModel(lifecycleScope))
-      }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val viewModel = ArticlesListViewModel(lifecycleScope)
+        val stateFlow = callbackFlow<ArticlesListState> {
+            viewModel.onChanged {
+                this.offer(it)
+            }
+            awaitClose {  }
+        }
+        setContent {
+            DEVScaffold {
+                ArticlesListContainer(viewModel, stateFlow)
+            }
+        }
     }
-  }
 }
 
 @Composable
 fun DEVScaffold(content: @Composable() (PaddingValues) -> Unit) {
-  return DEVTheme {
-    Scaffold(
-        topBar = {
-          TopAppBar {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Start
-            ) {
-              Box(
-                  backgroundColor = lightTextOnBackground,
-                  shape = MaterialTheme.shapes.small,
-                  modifier = Modifier.size(width = 64.dp, height = 48.dp),
-                  padding = 8.dp
-              ) {
-                Image(
-                    modifier = Modifier.fillMaxSize(),
-                    asset = vectorResource(id = R.drawable.ic_dev),
-                )
-              }
-              Spacer(modifier = Modifier.width(4.dp))
-              OutlinedTextField(
-                  value = TextFieldValue(""),
-                  onValueChange = {},
-                  label = { Text(text = "Search...") },
-                  placeholder = { Text(text = "Search...") },
-                  modifier = Modifier.fillMaxWidth().then(
-                      Modifier.padding(
-                          start = 8.dp,
-                          end = 8.dp,
-                          bottom = 8.dp
-                      )
-                  )
-              )
-            }
-          }
-        },
-        bodyContent = content
-    )
-  }
+    return DEVTheme {
+        Scaffold(
+            topBar = {
+                TopAppBar {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Start
+                    ) {
+                        Box(
+                            backgroundColor = lightTextOnBackground,
+                            shape = MaterialTheme.shapes.small,
+                            modifier = Modifier.size(width = 64.dp, height = 48.dp),
+                            padding = 8.dp
+                        ) {
+                            Image(
+                                modifier = Modifier.fillMaxSize(),
+                                asset = vectorResource(id = R.drawable.ic_dev),
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(4.dp))
+                        OutlinedTextField(
+                            value = TextFieldValue(""),
+                            onValueChange = {},
+                            label = { Text(text = "Search...") },
+                            placeholder = { Text(text = "Search...") },
+                            modifier = Modifier.fillMaxWidth().then(
+                                Modifier.padding(
+                                    start = 8.dp,
+                                    end = 8.dp,
+                                    bottom = 8.dp
+                                )
+                            )
+                        )
+                    }
+                }
+            },
+            bodyContent = content
+        )
+    }
 }

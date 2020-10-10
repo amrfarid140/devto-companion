@@ -29,6 +29,7 @@ class ArticlesListViewModel(private val scope: CoroutineScope) {
             val articles = api.getArticles(page = currentPage + 1)
             (stateChannel.value as? ArticlesListState.Ready)?.let { currentState ->
                 stateChannel.value = currentState.copy(
+                    currentPage = currentPage + 1,
                     data = currentState.data.toMutableList().apply {
                         addAll(articles.mapNotNull {
                             it.takeIf { it.coverImageUrl != null }?.toState()

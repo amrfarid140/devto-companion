@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import me.amryousef.devto.ui.DEVTheme
 import androidx.compose.material.icons.filled.Menu as MenuIcon
 
@@ -23,7 +21,7 @@ fun DEVScaffold(content: @Composable (PaddingValues) -> Unit) {
                     TextButton(onClick = {}) {
                         Text(
                             text = "Tooot",
-                            style = MaterialTheme.typography.button.copy(color = Color.Black)
+                            style = MaterialTheme.typography.button.copy(color = MaterialTheme.colors.onSurface)
                         )
                     }
                 }
@@ -32,8 +30,7 @@ fun DEVScaffold(content: @Composable (PaddingValues) -> Unit) {
                 TopAppBar(title = { Text("Articles") }, navigationIcon = {
                     IconButton(onClick = { state.drawerState.open() }) {
                         Icon(
-                            Icons.Default.MenuIcon,
-                            tint = Color.Black
+                            Icons.Default.MenuIcon
                         )
                     }
                 })

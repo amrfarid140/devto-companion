@@ -48,7 +48,7 @@ fun ArticlesListContainer(viewModel: ArticlesListViewModel, flow: Flow<ArticlesL
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CircularProgressIndicator(color = MaterialTheme.colors.secondary)
+            CircularProgressIndicator(color = MaterialTheme.colors.onBackground)
         }
         is ArticlesListState.Error -> Text(text = "error")
     }

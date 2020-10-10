@@ -9,56 +9,92 @@
 import SwiftUI
 import presentation
 
+class ArticlesListStateWrapper: ObservableObject {
+	@Published var state: ArticlesListState
+	let viewModel: CFArticlesListViewModel
+	
+	init(viewModel: CFArticlesListViewModel) {
+		self.viewModel = viewModel
+		state = ArticlesListState.Loading()
+	}
+	
+	func startObserving() {
+		viewModel.onChanged { recievedState in
+			self.state = recievedState
+		}
+	}
+	
+	func stopObserving() {
+		viewModel.cancel()
+	}
+}
+
 struct ContentView: View {
-	private let viewModel = CFArticlesListViewModel()
-	@State var state: ArticlesListState = ArticlesListState.Loading()
+	private let wrapper = ArticlesListStateWrapper(viewModel: CFArticlesListViewModel())
 	var body: some View {
-		StateText(state: state)
+		StateText()
 			.onAppear {
-				viewModel.onChanged { recievedState in
-					self.state = recievedState
-				}
+				wrapper.startObserving()
 			}.onDisappear {
-				viewModel.cancel()
-			}
+				wrapper.stopObserving()
+			}.environmentObject(wrapper)
 	}
 }
 
 struct StateText: View {
-	let state: ArticlesListState
+	@EnvironmentObject
+	var wrapper: ArticlesListStateWrapper
+	
+	init() {}
 	
 	var body: some View {
-		switch state {
+		switch wrapper.state {
 		case is ArticlesListState.Error:
 			return AnyView(Text("Error"))
 		case is ArticlesListState.Loading:
 			return AnyView(ProgressView())
 		case is ArticlesListState.Ready:
-			return AnyView(ArticlesList(items: (state as! ArticlesListState.Ready).data ))
+			return AnyView(ArticlesList(items: (wrapper.state as! ArticlesListState.Ready).data, viewModel: wrapper.viewModel))
 		default:
 			return AnyView(ProgressView())
 		}
 	}
 }
 
-struct ArticlesList: View {
-	let items: [ArticlesListState.ReadyArticleState]
+struct IdentifiableReadyArticleState : Identifiable, Equatable {
+	let article: ArticlesListState.ReadyArticleState
+	let id = UUID()
 	
-	init(items: [ArticlesListState.ReadyArticleState]) {
-		self.items = items
+	
+}
+
+struct ArticlesList: View {
+	let items: [IdentifiableReadyArticleState]
+	let viewModel: CFArticlesListViewModel
+	
+	init(items: [ArticlesListState.ReadyArticleState], viewModel: CFArticlesListViewModel) {
+		self.items = items.map{
+			IdentifiableReadyArticleState(article: $0)
+		}
+		self.viewModel = viewModel
 	}
 	
 	var body: some View {
 		NavigationView {
 			ScrollView(showsIndicators: true) {
 				LazyVStack {
-					ForEach(self.items, id: \.title) { article  in
+					ForEach(self.items) { article  in
 						NavigationLink(destination: Text("Hamada")
 										.navigationBarTitleDisplayMode(.inline)
 						) {
-							ArticleRow(item: article)
+							ArticleRow(item: article.article)
 								.frame(minHeight: 210)
 								.shadow(radius: 1)
+								.onAppear {
+									if items.firstIndex(of: article) == items.count - 10 {
+										viewModel.onLoadMore()
+									}
+								}
 						}
 					}
 				}

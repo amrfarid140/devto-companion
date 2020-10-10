@@ -3,41 +3,57 @@ package me.amryousef.devto.presentation
 import api.ArticlesApi
 import api.model.Article
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
-class ArticlesListViewModel(private val scope: CoroutineScope) {
+interface ArticlesListViewModel {
+    fun onChanged(consumer: (ArticlesListState) -> Unit)
+    fun onLoadMore()
+    fun cancel()
+}
+
+class ArticlesListViewModelImpl(override val coroutineContext: CoroutineContext): ArticlesListViewModel, CoroutineScope {
 
     private val api: ArticlesApi = ArticlesApi.getInstance()
 
     private val stateChannel = MutableStateFlow<ArticlesListState>(ArticlesListState.Loading)
 
-    fun onChanged(consumer: (ArticlesListState) -> Unit) {
-        scope.launch {
+    override fun onChanged(consumer: (ArticlesListState) -> Unit) {
+        launch {
             stateChannel.onStart { loadData() }.collect {
                 consumer(it)
             }
         }
     }
 
-    fun onLoadMore() {
+    override fun onLoadMore() {
         val currentPage = (stateChannel.value as? ArticlesListState.Ready)?.currentPage ?: 0
-        scope.launch {
+        launch {
             val articles = api.getArticles(page = currentPage + 1)
             (stateChannel.value as? ArticlesListState.Ready)?.let { currentState ->
+                val updatedItems = currentState.data.toMutableList().apply {
+                    addAll(articles.mapNotNull { newArticle ->
+                        newArticle.takeIf {
+                            it.coverImageUrl != null && currentState.data.find { articleState -> articleState.title == newArticle.title } == null
+                        }?.toState()
+                    })
+                }
                 stateChannel.value = currentState.copy(
                     currentPage = currentPage + 1,
-                    data = currentState.data.toMutableList().apply {
-                        addAll(articles.mapNotNull {
-                            it.takeIf { it.coverImageUrl != null }?.toState()
-                        })
-                    }
+                    data = updatedItems
                 )
             }
         }
+    }
+
+    override fun cancel() {
+        coroutineContext.cancelChildren()
     }
 
     private suspend fun loadData() {

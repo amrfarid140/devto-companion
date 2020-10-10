@@ -22,14 +22,15 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import me.amryousef.devto.presentation.ArticlesListState
 import me.amryousef.devto.presentation.ArticlesListViewModel
+import me.amryousef.devto.presentation.ArticlesListViewModelImpl
 import me.amryousef.devto.ui.DEVTheme
 import me.amryousef.devto.ui.lightTextOnBackground
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val viewModel = ArticlesListViewModel(lifecycleScope)
-        val stateFlow = callbackFlow<ArticlesListState> {
+        val viewModel = ArticlesListViewModelImpl(lifecycleScope.coroutineContext)
+        val stateFlow = callbackFlow {
             viewModel.onChanged {
                 this.offer(it)
             }

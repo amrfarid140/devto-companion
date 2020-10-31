@@ -1,25 +1,25 @@
-allprojects {
-    repositories {
-        maven("https://dl.bintray.com/kotlin/kotlin-eap/")
-        jcenter()
-        google()
-        mavenCentral()
-    }
-}
-
 buildscript {
 
     repositories {
-        maven("https://dl.bintray.com/kotlin/kotlin-eap/")
-        jcenter()
         google()
+        jcenter()
+        maven("https://dl.bintray.com/kotlin/kotlin-eap/")
         mavenCentral()
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:4.2.0-alpha13")
+        classpath("com.android.tools.build:gradle:4.2.0-alpha14")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlinVersion}")
         classpath(kotlin("serialization", version = Versions.kotlinVersion))
+    }
+}
+
+subprojects {
+    repositories {
+        google()
+        jcenter()
+        maven("https://dl.bintray.com/kotlin/kotlin-eap/")
+        mavenCentral()
     }
 }
 

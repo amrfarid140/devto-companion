@@ -15,12 +15,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val viewModel = ArticlesListViewModelImpl(lifecycleScope.coroutineContext)
-        val stateFlow = callbackFlow {
-            viewModel.onChanged {
-                this.offer(it)
-            }
-            awaitClose {  }
-        }
         setContent {
             val navController = rememberNavController()
             DEVScaffold {
@@ -31,12 +25,15 @@ class MainActivity : AppCompatActivity() {
                     composable(Route.LIST.uri) {
                         ArticlesListContainer(
                             navController = navController,
-                            viewModel = viewModel,
-                            flow = stateFlow
+                            viewModel = viewModel
                         )
                     }
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 }

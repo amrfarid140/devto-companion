@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 interface ArticlesListViewModel {
-    fun onChanged(consumer: (ArticlesListState) -> Unit)
+    val state: Flow<ArticlesListState>
     fun onLoadMore()
     fun cancel()
 }
@@ -22,15 +22,10 @@ class ArticlesListViewModelImpl(override val coroutineContext: CoroutineContext)
 
     private val api: ArticlesApi = ArticlesApi.getInstance()
 
-    private val stateChannel = MutableStateFlow<ArticlesListState>(ArticlesListState.Loading)
+    private val stateChannel =
+        MutableStateFlow<ArticlesListState>(ArticlesListState.Loading)
 
-    override fun onChanged(consumer: (ArticlesListState) -> Unit) {
-        launch {
-            stateChannel.onStart { loadData() }.collect {
-                consumer(it)
-            }
-        }
-    }
+    override val state: Flow<ArticlesListState> = stateChannel.onStart { loadData() }
 
     override fun onLoadMore() {
         val currentPage = (stateChannel.value as? ArticlesListState.Ready)?.currentPage ?: 0

@@ -24,9 +24,8 @@ import me.amryousef.devto.presentation.ArticlesListViewModel
 fun ArticlesListContainer(
     navController: NavController,
     viewModel: ArticlesListViewModel,
-    flow: Flow<ArticlesListState>
 ) {
-    val state = flow.collectAsState(initial = ArticlesListState.Loading)
+    val state = viewModel.state.collectAsState(initial = ArticlesListState.Loading)
     val listState = rememberLazyListState()
     return when (val stateValue = state.value) {
         is ArticlesListState.Ready -> {

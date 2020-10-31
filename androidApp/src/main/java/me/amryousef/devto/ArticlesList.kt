@@ -14,13 +14,18 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import kotlinx.coroutines.flow.Flow
 import me.amryousef.devto.presentation.ArticlesListState
 import me.amryousef.devto.presentation.ArticlesListViewModel
 
 
 @Composable
-fun ArticlesListContainer(viewModel: ArticlesListViewModel, flow: Flow<ArticlesListState>) {
+fun ArticlesListContainer(
+    navController: NavController,
+    viewModel: ArticlesListViewModel,
+    flow: Flow<ArticlesListState>
+) {
     val state = flow.collectAsState(initial = ArticlesListState.Loading)
     val listState = rememberLazyListState()
     return when (val stateValue = state.value) {

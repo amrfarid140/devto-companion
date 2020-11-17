@@ -1,16 +1,14 @@
 package me.amryousef.devto
 
-import androidx.compose.foundation.Icon
-import androidx.compose.foundation.Text
-import androidx.compose.foundation.layout.Column
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import me.amryousef.devto.scaffold.AppDrawer
 import me.amryousef.devto.ui.DEVTheme
 import androidx.compose.material.icons.filled.Menu as MenuIcon

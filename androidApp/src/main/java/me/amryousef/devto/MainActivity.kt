@@ -7,8 +7,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.callbackFlow
 import me.amryousef.devto.presentation.ArticlesListViewModelImpl
 
 class MainActivity : AppCompatActivity() {

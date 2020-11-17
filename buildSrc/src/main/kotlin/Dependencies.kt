@@ -1,5 +1,5 @@
 object Versions {
-    const val composeVersion = "1.0.0-alpha06"
+    const val composeVersion = "1.0.0-alpha07"
     const val kotlinVersion = "1.4.10"
     const val coroutinesVersion = "1.3.9-native-mt-2"
     const val ktorVersion = "1.4.1"
@@ -14,7 +14,7 @@ object Dependencies {
             "foundation" to "androidx.compose.foundation:foundation:${Versions.composeVersion}",
             "materialDesign" to "androidx.compose.material:material:${Versions.composeVersion}",
             "materialDesignIcons" to "androidx.compose.material:material-icons-extended:${Versions.composeVersion}",
-            "navigation" to "androidx.navigation:navigation-compose:1.0.0-alpha01"
+            "navigation" to "androidx.navigation:navigation-compose:1.0.0-alpha02"
         )
 
     const val kotlinStd = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlinVersion}"

@@ -9,18 +9,22 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import me.amryousef.devto.presentation.ArticlesListState
 import me.amryousef.devto.scaffold.AppDrawer
 import me.amryousef.devto.ui.DEVTheme
 import androidx.compose.material.icons.filled.Menu as MenuIcon
 
 @Composable
-fun DEVScaffold(content: @Composable (PaddingValues) -> Unit) {
+fun DEVScaffold(
+    tags: List<ArticlesListState.Ready.TagState>,
+    content: @Composable (PaddingValues) -> Unit
+) {
     val state = rememberScaffoldState()
     return DEVTheme {
         Scaffold(
             scaffoldState = state,
             drawerContent = {
-                AppDrawer()
+                AppDrawer(tags)
             },
             topBar = {
                 TopAppBar(title = { Text("Articles") }, navigationIcon = {

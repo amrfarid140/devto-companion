@@ -2,11 +2,13 @@ package me.amryousef.devto
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.setContent
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import me.amryousef.devto.presentation.ArticlesListState
 import me.amryousef.devto.presentation.ArticlesListViewModelImpl
 
 class MainActivity : AppCompatActivity() {
@@ -15,7 +17,8 @@ class MainActivity : AppCompatActivity() {
         val viewModel = ArticlesListViewModelImpl(lifecycleScope.coroutineContext)
         setContent {
             val navController = rememberNavController()
-            DEVScaffold {
+            val state = viewModel.state.collectAsState(initial = ArticlesListState.Loading)
+            DEVScaffold(tags = (state.value as? ArticlesListState.Ready)?.tags ?: emptyList()) {
                 NavHost(
                     navController = navController,
                     startDestination = Route.LIST.uri,
@@ -23,7 +26,8 @@ class MainActivity : AppCompatActivity() {
                     composable(Route.LIST.uri) {
                         ArticlesListContainer(
                             navController = navController,
-                            viewModel = viewModel
+                            state = state.value,
+                            onLoadMore = { viewModel.onLoadMore() }
                         )
                     }
                 }

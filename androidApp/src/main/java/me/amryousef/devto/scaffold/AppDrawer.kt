@@ -13,9 +13,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import me.amryousef.devto.presentation.ArticlesListState
 
 @Composable
-fun AppDrawer() {
+fun AppDrawer(
+    tags: List<ArticlesListState.Ready.TagState>,
+) {
     Column(
         horizontalAlignment = Alignment.Start,
         modifier = Modifier.padding(vertical = 12.dp)

@@ -8,26 +8,24 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import me.amryousef.devto.presentation.ArticlesListState
-import me.amryousef.devto.presentation.ArticlesListViewModel
 
 
 @Composable
 fun ArticlesListContainer(
     navController: NavController,
-    viewModel: ArticlesListViewModel,
+    state: ArticlesListState,
+    onLoadMore: () -> Unit
 ) {
-    val state = viewModel.state.collectAsState(initial = ArticlesListState.Loading)
     val listState = rememberLazyListState()
-    return when (val stateValue = state.value) {
+    return when (val stateValue = state) {
         is ArticlesListState.Ready -> {
             if (listState.firstVisibleItemIndex == stateValue.data.size - 10) {
-                viewModel.onLoadMore()
+                onLoadMore()
             }
             LazyColumnFor(
                 items = stateValue.data,

@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.Menu as MenuIcon
 @Composable
 fun DEVScaffold(
     tags: List<ArticlesListState.Ready.TagState>,
+    onTagClicked: (ArticlesListState.Ready.TagState) -> Unit,
     content: @Composable (PaddingValues) -> Unit
 ) {
     val state = rememberScaffoldState()
@@ -24,7 +25,7 @@ fun DEVScaffold(
         Scaffold(
             scaffoldState = state,
             drawerContent = {
-                AppDrawer(tags)
+                AppDrawer(tags, onTagClicked)
             },
             topBar = {
                 TopAppBar(title = { Text("Articles") }, navigationIcon = {

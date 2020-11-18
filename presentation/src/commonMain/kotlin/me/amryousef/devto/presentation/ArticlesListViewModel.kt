@@ -79,4 +79,18 @@ class ArticlesListViewModelImpl(override val coroutineContext: CoroutineContext)
         coverImageUrl!!,
         user.name
     )
+
+    fun onTagSelected(tagState: ArticlesListState.Ready.TagState) {
+        (stateChannel.value as? ArticlesListState.Ready)?.let {
+            stateChannel.value = it.copy(
+                tags = it.tags.map { tag ->
+                    if (tag == tagState) {
+                        tag.copy(isSelected = !tag.isSelected)
+                    } else {
+                        tag
+                    }
+                }
+            )
+        }
+    }
 }

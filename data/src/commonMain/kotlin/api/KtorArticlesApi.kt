@@ -1,7 +1,9 @@
 package api
 
 import api.model.Article
+import api.model.Tag
 import io.ktor.client.*
+import io.ktor.client.features.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.request.*
@@ -12,6 +14,11 @@ expect val KtorDispatcher: CoroutineDispatcher
 
 class KtorArticlesApi : ArticlesApi {
 
+    companion object {
+        private val BASE_URL = "https://dev.to/api/"
+        private val API_KEY = "BNJUyn8jhYZoiihKgnwiT7fW"
+    }
+
     private val httpClient = HttpClient {
         install(JsonFeature) {
             serializer = KotlinxSerializer(
@@ -21,16 +28,24 @@ class KtorArticlesApi : ArticlesApi {
                 }
             )
         }
+        defaultRequest {
+            header("api-key", API_KEY)
+        }
     }
 
     override suspend fun getArticles(page: Int): List<Article> {
         return withContext(KtorDispatcher) {
             httpClient.get {
-                url("https://dev.to/api/articles")
+                url("${BASE_URL}articles")
                 parameter("page", page)
-                headers {
-                    append("api-key", "BNJUyn8jhYZoiihKgnwiT7fW")
-                }
+            }
+        }
+    }
+
+    override suspend fun getTags(): List<Tag> {
+        return withContext(KtorDispatcher) {
+            httpClient.get {
+                url("${BASE_URL}tags")
             }
         }
     }

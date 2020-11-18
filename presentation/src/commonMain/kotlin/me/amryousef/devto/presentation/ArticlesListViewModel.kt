@@ -2,14 +2,11 @@ package me.amryousef.devto.presentation
 
 import api.ArticlesApi
 import api.model.Article
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 interface ArticlesListViewModel {
@@ -18,7 +15,8 @@ interface ArticlesListViewModel {
     fun cancel()
 }
 
-class ArticlesListViewModelImpl(override val coroutineContext: CoroutineContext): ArticlesListViewModel, CoroutineScope {
+class ArticlesListViewModelImpl(override val coroutineContext: CoroutineContext) :
+    ArticlesListViewModel, CoroutineScope {
 
     private val api: ArticlesApi = ArticlesApi.getInstance()
 
@@ -51,19 +49,28 @@ class ArticlesListViewModelImpl(override val coroutineContext: CoroutineContext)
         coroutineContext.cancelChildren()
     }
 
-    private suspend fun loadData() {
+    private suspend fun loadData() = supervisorScope {
         ArticlesListState.Loading
         try {
-            val r = api.getArticles()
+            val articles = async { api.getArticles() }
+            val tags = async { api.getTags() }
             stateChannel.value = ArticlesListState.Ready(
                 1,
-                r.mapNotNull {
+                articles.await().mapNotNull {
                     it.takeIf { it.coverImageUrl != null }?.toState()
+                },
+                tags.await().map {
+                    ArticlesListState.Ready.TagState(
+                        it.id,
+                        it.name,
+                        false
+                    )
                 },
                 ""
             )
         } catch (e: Exception) {
-            stateChannel.value = ArticlesListState.Error
+            println(e)
+            stateChannel.value = ArticlesListState.Error(e)
         }
     }
 

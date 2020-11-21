@@ -19,8 +19,9 @@ class MainActivity : AppCompatActivity() {
             val navController = rememberNavController()
             val state = viewModel.state.collectAsState(initial = ArticlesListState.Loading)
             DEVScaffold(
-                tags = (state.value as? ArticlesListState.Ready)?.tags ?: emptyList(),
-                onTagClicked = { viewModel.onTagSelected(it) }
+                tags = (state.value as? ArticlesListState.Ready)?.tagsState?.tags ?: emptyList(),
+                onTagClicked = { viewModel.onTagSelected(it) },
+                onLoadMoreTags = { viewModel.onLoadMoreTags() }
             ) {
                 NavHost(
                     navController = navController,

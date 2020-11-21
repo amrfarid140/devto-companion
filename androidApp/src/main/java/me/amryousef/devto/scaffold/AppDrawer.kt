@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.selection.triStateToggleable
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -17,12 +18,18 @@ import me.amryousef.devto.presentation.ArticlesListState
 @Composable
 fun AppDrawer(
     tags: List<ArticlesListState.Ready.TagState>,
-    onTagClick: (ArticlesListState.Ready.TagState) -> Unit
+    onTagClick: (ArticlesListState.Ready.TagState) -> Unit,
+    onLoadMore: () -> Unit
 ) {
+    val listState = rememberLazyListState()
+    if(listState.firstVisibleItemIndex < tags.size * 0.2 || tags.size == 10) {
+        onLoadMore()
+    }
     LazyColumnFor(
         items = tags,
         horizontalAlignment = Alignment.Start,
-        modifier = Modifier.padding(vertical = 12.dp)
+        modifier = Modifier.padding(vertical = 12.dp),
+        state = listState
     ) {
         DrawerTag(tag = it, onClick = { onTagClick(it) })
         Spacer(modifier = Modifier.height(1.dp))

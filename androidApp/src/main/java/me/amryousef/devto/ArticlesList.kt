@@ -22,13 +22,13 @@ fun ArticlesListContainer(
     onLoadMore: () -> Unit
 ) {
     val listState = rememberLazyListState()
-    return when (val stateValue = state) {
+    return when (state) {
         is ArticlesListState.Ready -> {
-            if (listState.firstVisibleItemIndex == stateValue.data.size - 10) {
+            if (listState.firstVisibleItemIndex == state.data.size - 10) {
                 onLoadMore()
             }
             LazyColumnFor(
-                items = stateValue.data,
+                items = state.data,
                 state = listState,
                 modifier = Modifier
             ) { item ->

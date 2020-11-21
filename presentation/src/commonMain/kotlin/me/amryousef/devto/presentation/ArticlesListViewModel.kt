@@ -5,7 +5,6 @@ import api.model.Article
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
 import kotlin.coroutines.CoroutineContext
 
@@ -59,13 +58,14 @@ class ArticlesListViewModelImpl(override val coroutineContext: CoroutineContext)
                 articles.await().mapNotNull {
                     it.takeIf { it.coverImageUrl != null }?.toState()
                 },
-                tags.await().map {
-                    ArticlesListState.Ready.TagState(
-                        it.id,
-                        it.name,
-                        false
-                    )
-                },
+                ArticlesListState.Ready.TagsState(
+                    1, tags.await().map {
+                        ArticlesListState.Ready.TagState(
+                            it.id,
+                            it.name,
+                            false
+                        )
+                    }),
                 ""
             )
         } catch (e: Exception) {
@@ -83,14 +83,45 @@ class ArticlesListViewModelImpl(override val coroutineContext: CoroutineContext)
     fun onTagSelected(tagState: ArticlesListState.Ready.TagState) {
         (stateChannel.value as? ArticlesListState.Ready)?.let {
             stateChannel.value = it.copy(
-                tags = it.tags.map { tag ->
-                    if (tag == tagState) {
-                        tag.copy(isSelected = !tag.isSelected)
-                    } else {
-                        tag
+                tagsState = it.tagsState.copy(
+                    tags = it.tagsState.tags.map { tag ->
+                        if (tag == tagState) {
+                            tag.copy(isSelected = !tag.isSelected)
+                        } else {
+                            tag
+                        }
                     }
-                }
+                )
             )
+        }
+    }
+
+    fun onLoadMoreTags() {
+        (stateChannel.value as? ArticlesListState.Ready)?.let { currentState ->
+            launch {
+                try {
+                    val newTagPage = currentState.tagsState.page + 1
+                    val newTags = api.getTags(newTagPage)
+                    stateChannel.value = currentState.copy(
+                        tagsState = currentState.tagsState.copy(
+                            page = newTagPage,
+                            tags = currentState.tagsState.tags.toMutableList().apply {
+                                addAll(
+                                    newTags.map {
+                                        ArticlesListState.Ready.TagState(
+                                            it.id,
+                                            it.name,
+                                            false
+                                        )
+                                    }
+                                )
+                            }
+                        )
+                    )
+                } catch (e: Exception) {
+
+                }
+            }
         }
     }
 }

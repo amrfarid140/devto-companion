@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ArticlesApi {
     suspend fun getArticles(page: Int = 1): List<Article>
-    suspend fun getTags(): List<Tag>
+    suspend fun getTags(page: Int = 1): List<Tag>
 
     companion object {
         fun getInstance(): ArticlesApi = KtorArticlesApi()

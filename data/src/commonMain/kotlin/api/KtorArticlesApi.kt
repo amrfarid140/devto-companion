@@ -15,8 +15,8 @@ expect val KtorDispatcher: CoroutineDispatcher
 class KtorArticlesApi : ArticlesApi {
 
     companion object {
-        private val BASE_URL = "https://dev.to/api/"
-        private val API_KEY = "BNJUyn8jhYZoiihKgnwiT7fW"
+        private const val BASE_URL = "https://dev.to/api/"
+        private const val API_KEY = "BNJUyn8jhYZoiihKgnwiT7fW"
     }
 
     private val httpClient = HttpClient {
@@ -42,10 +42,11 @@ class KtorArticlesApi : ArticlesApi {
         }
     }
 
-    override suspend fun getTags(): List<Tag> {
+    override suspend fun getTags(page: Int): List<Tag> {
         return withContext(KtorDispatcher) {
             httpClient.get {
                 url("${BASE_URL}tags")
+                parameter("page", page)
             }
         }
     }

@@ -5,7 +5,7 @@ import api.model.Tag
 import kotlinx.coroutines.flow.Flow
 
 interface ArticlesApi {
-    suspend fun getArticles(page: Int = 1): List<Article>
+    suspend fun getArticles(page: Int = 1, tags: List<String> = emptyList()): List<Article>
     suspend fun getTags(page: Int = 1): List<Tag>
 
     companion object {

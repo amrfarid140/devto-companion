@@ -33,11 +33,14 @@ class KtorArticlesApi : ArticlesApi {
         }
     }
 
-    override suspend fun getArticles(page: Int): List<Article> {
+    override suspend fun getArticles(page: Int, tags: List<String>): List<Article> {
         return withContext(KtorDispatcher) {
             httpClient.get {
                 url("${BASE_URL}articles")
                 parameter("page", page)
+                if(tags.isNotEmpty()) {
+                    parameter("tags", tags.joinToString(separator = ", "))
+                }
             }
         }
     }

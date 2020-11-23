@@ -2,18 +2,14 @@ package me.amryousef.devto
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumnFor
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import me.amryousef.devto.presentation.ArticleState
 import me.amryousef.devto.presentation.ArticlesListState
-
 
 @Composable
 fun ArticlesListContainer(
@@ -21,15 +17,10 @@ fun ArticlesListContainer(
     state: ArticlesListState,
     onLoadMore: () -> Unit
 ) {
-    val listState = rememberLazyListState()
     return when (state) {
         is ArticlesListState.Ready -> {
-            if (listState.firstVisibleItemIndex == state.data.size - 10) {
-                onLoadMore()
-            }
             LazyColumnFor(
-                items = state.data,
-                state = listState,
+                items = state.articlesState.items,
                 modifier = Modifier
             ) { item ->
                 Box(
@@ -39,7 +30,28 @@ fun ArticlesListContainer(
                         bottom = 12.dp,
                         top = 12.dp
                     )
-                ) { ArticleListItem(article = item) }
+                ) {
+                    if (item is ArticleState.Article) {
+                        ArticleListItem(article = item)
+                    } else {
+                        CircularProgressIndicator()
+                    }
+                }
+                Spacer(modifier = Modifier.fillMaxWidth().height(8.dp))
+
+                if (state.articlesState.items.indexOf(item) == state.articlesState.items.size - 1) {
+                    TextButton(
+                        onClick = onLoadMore,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(
+                            "Load more",
+                            style = MaterialTheme.typography.button.copy(
+                                color = MaterialTheme.colors.onPrimary
+                            )
+                        )
+                    }
+                }
             }
         }
         is ArticlesListState.Loading -> Column(
@@ -54,7 +66,7 @@ fun ArticlesListContainer(
 }
 
 @Composable
-fun ArticleListItem(article: ArticlesListState.Ready.ArticleState) {
+fun ArticleListItem(article: ArticleState.Article) {
     Card(modifier = Modifier.fillMaxWidth()) {
         Column(
             modifier = Modifier.fillMaxSize()

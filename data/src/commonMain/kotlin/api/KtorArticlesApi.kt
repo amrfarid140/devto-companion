@@ -37,10 +37,10 @@ class KtorArticlesApi : ArticlesApi {
         return withContext(KtorDispatcher) {
             httpClient.get {
                 url("${BASE_URL}articles")
-                parameter("page", page)
                 if(tags.isNotEmpty()) {
-                    parameter("tags", tags.joinToString(separator = ", "))
+                    parameter("tags", tags.joinToString(separator = ","))
                 }
+                parameter("page", page)
             }
         }
     }
